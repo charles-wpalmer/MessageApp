@@ -10,20 +10,14 @@ services:
         container_name: container_php
         build:
             context: php7-fpm
-            args:
-                TIMEZONE: ${TIMEZONE}
         volumes:
-            - ${SYMFONY_APP_PATH}:/var/www/symfony
-            - ./logs/symfony:/var/www/symfony/var/log
+            - ./:/var/www/symfony
         links:
             - redis
     nginx:
         container_name: container_nginx
         build:
             context: nginx
-            args:
-                MAX_EXECUTION_TIME: ${MAX_EXECUTION_TIME}
-                SERVER_NAME: ${SERVER_NAME}
         ports:
             - "80:80"
         volumes_from:
@@ -36,10 +30,10 @@ services:
         volumes:
             - "./.data/mysql:/var/lib/mysql"
         environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_USER: ${MYSQL_USER}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            - "MYSQL_ROOT_PASSWORD=secret"
+            - "MYSQL_USER=homestead"
+            - "MYSQL_PASSWORD=secret"
+            - "MYSQL_DATABASE=homestead"
         ports:
             - "3306:3306"
     rabbit:
