@@ -24,7 +24,7 @@ services:
             - php
     mysql:
         container_name: container_mysql
-        image: mysql
+        image: mysql:5.7
         environment:
             - "MYSQL_ROOT_PASSWORD=secret"
             - "MYSQL_USER=homestead"
