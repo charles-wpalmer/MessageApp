@@ -32,4 +32,12 @@ Docker setup, instead of building it from scratch, seemed a reasonable setup,
 had to trim down some Dockerfiles to make it more suitable, and cut out ELK 
 stack for now.
 
-2. 
+3. Installed the Symfony CLI and created a fresh application that way.
+
+2. Setting up the Entity, Migration, FormType and Repository for the Message
+table. Bringing the logic out of the controller into the FormType, which deals
+directly with the Message Entity.
+
+Messaging:
+https://www.nielsvandermolen.com/tutorial-symfony-4-messenger/
+https://www.nielsvandermolen.com/tutorial-symfony-4-messenger/

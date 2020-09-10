@@ -17,6 +17,17 @@ RUN docker-php-ext-install pdo pdo_mysql bcmath zip
 # Install Redis extension
 RUN pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-enable redis
 
+# Install ampq php module
+RUN apt-get install -y \
+        librabbitmq-dev \
+        libssh-dev \
+    && docker-php-ext-install \
+        bcmath \
+        sockets \
+    && pecl install amqp \
+    && rm -rf /tmp/pear \
+    && docker-php-ext-enable amqp
+
 # Install xdebug
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
