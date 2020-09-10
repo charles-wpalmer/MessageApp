@@ -2,39 +2,41 @@
 
 namespace App\Controller;
 
+use App\Entity\Message;
+use App\Form\MessageType;
+use App\Service\MessageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class MessageController extends AbstractController
 {
-    public function send(): Response
+    /**
+     * @var MessageService
+     */
+    private $messageService;
+
+    /**
+     * MessageController constructor.
+     *
+     * @param MessageService $servcice
+     */
+    public function __construct(MessageService $servcice )
     {
-        // Create the form
-        $form = $this->createFormBuilder()
-                     ->add('task', TextType::class)
-                     ->add('dueDate', DateType::class)
-                     ->add('save', SubmitType::class, ['label' => 'Create Task'])
-                     ->getForm();
+        $this->messageService = $servcice;
+    }
 
-        // on submit Validate the data, send the job
+    public function send(Request $request): Response
+    {
+        $message = new Message();
+        $form = $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
-            $task = $form->getData();
-
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
-            // $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($task);
-            // $entityManager->flush();
-
-            return $this->redirectToRoute('task_success');
+            $message = $form->getData();
+            $this->messageService->saveMessage($message);
         }
 
-        // render the form
         return $this->render('base.html.twig', [
             'form' => $form->createView(),
         ]);
