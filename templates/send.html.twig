@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Send Message!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="form-group">
+            <h2>Send Message</h2>
+            {% if rate_limit is defined %}
+                <p>Limited to only one message every 15 seconds!</p>
+            {% endif %}
+            <div class="form-control">
+                {{ form(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

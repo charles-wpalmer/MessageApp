@@ -5,10 +5,10 @@ namespace App\Service;
 use App\Entity\Message;
 use Twilio\Rest\Client;
 
-class TwiloService
+class TwilioService
 {
     /**
-     * @var array array of possible statuses for a message
+     * @var array of possible statuses for a message
      */
     const MESSAGE_STATUSES = [
         'PREPARING' => 0,
@@ -20,28 +20,56 @@ class TwiloService
     ];
 
     /**
+     * @var array Readable array of possible statuses for a message
+     */
+    const READABLE_MESSAGE_STATUSES = [
+        0 => 'Preparing',
+        1 => 'Queues',
+        2 => 'Sent',
+        3 => 'Failed',
+        4 => 'Delivered',
+        5 => 'Undelivered',
+    ];
+
+    /**
      * @var Client
      */
     private $twilio;
 
-    public function __construct(Client $client)
+    /**
+     * @var MessageService
+     */
+    private $messageService;
+
+    /**
+     * TwilioService constructor.
+     *
+     * @param Client $client
+     * @param MessageService $messageService
+     */
+    public function __construct(Client $client, MessageService $messageService)
     {
         $this->twilio = $client;
+        $this->messageService = $messageService;
     }
 
+    /**
+     * Send the message to Twilio
+     *
+     * @param Message $message
+     * @throws \Twilio\Exceptions\TwilioException
+     */
     public function sendMessage(Message $message)
     {
-        var_dump($message->getMessage());
-
-        $message = $this->twilio->messages->create($message->getPhoneNumber(),
+        $smsMessage = $this->twilio->messages->create(
+            $message->getPhoneNumber(),
                 [
-                    "body" => "McAvoy or Stewart? These timelines can get so confusing.",
-                    "from" => "+12059464152",
-                    //"statusCallback" => "http://postb.in/1234abcd"
+                    "body" => $message->getMessage(),
+                    "from" => "+447445049414",
+                    "statusCallback" => "http://randomstring.ngrok.io/1234abcd"
                 ]
-            );
+        );
 
-        print($message->sid);
-        // Send Message via twilo
+        $this->messageService->updateMessageSid($message, "TESTING 123");
     }
 }

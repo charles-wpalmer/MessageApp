@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messages{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h5>Messages Sent:</h5>
+        <a href="/send/message">Send Message</a>
+        {% for message in messages %}
+            <div class="jumbotron">
+                <h5>{{ message.getPhoneNumber() }}</h5>
+                <p class="lead">Sent On: {{ message.getCreatedAt()|date("d/m/Y") }} </p>
+                <p class="lead">Sent By: {{ message.getUser().getUsername() }} </p>
+                <hr class="my-4">
+                <p>{{ message.getMessage() }}</p>
+                <p>Status: {{ constant('App\\Service\\TwilioService::READABLE_MESSAGE_STATUSES')[message.getStatus()] }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

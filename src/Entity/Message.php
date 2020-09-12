@@ -33,9 +33,25 @@ class Message
     private $phone_number;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $full_name;
+    private $user;
+
+    /**
+     * @ORM\Column(type="string", length=34, nullable=true)
+     */
+    private $sms_sid;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -78,14 +94,38 @@ class Message
         return $this;
     }
 
-    public function getFullName(): ?string
+    public function getUser(): ?User
     {
-        return $this->full_name;
+        return $this->user;
     }
 
-    public function setFullName(string $full_name): self
+    public function setUser(?User $user_id): self
     {
-        $this->full_name = $full_name;
+        $this->user = $user_id;
+
+        return $this;
+    }
+
+    public function getSmsSid(): ?string
+    {
+        return $this->sms_sid;
+    }
+
+    public function setSmsSid(?string $sms_sid): self
+    {
+        $this->sms_sid = $sms_sid;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

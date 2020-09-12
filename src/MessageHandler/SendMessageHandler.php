@@ -3,22 +3,22 @@
 namespace App\MessageHandler;
 
 use App\Message\SendMessage;
-use App\Service\TwiloService;
+use App\Service\TwilioService;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class SendMessageHandler implements MessageHandlerInterface
 {
     /**
-     * @var TwiloService
+     * @var TwilioService
      */
     private $twiloService;
 
     /**
      * MessageService constructor.
      *
-     * @param TwiloService $service
+     * @param TwilioService $service
      */
-    public function __construct(TwiloService $service)
+    public function __construct(TwilioService $service)
     {
         $this->twiloService = $service;
     }
