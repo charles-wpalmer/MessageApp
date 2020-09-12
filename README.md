@@ -3,11 +3,13 @@
 This application will take a max 140 character string, and send it to a given
 phone number. Built Using:
 
-
 1. Symfony
 2. RabbitMQ
 3. Redis
 4. MySQL/Doctrine
+
+Found the challenge very fun, learning and getting to grips with a lot of new 
+technology, mainly Symfony, RabbitMQ, ngrok and Twilio.
 
 ## Usage
 
@@ -19,11 +21,20 @@ containers within the network:
  - container_nginx: nginx web server, will forward request to container_php
  - container_mysql: mysql database server
  - container_rabbit: RabbitMQ queue server
+ - container_rabbit: Ngrok service (commented out)
 
 ```sh
 ./run
 ```
 
+Five pages exist:
+
+  1. / - main symfony page
+  2. /register - page to go to, to register
+  3. /login - page taken to after register to login
+  4. /send/message - head to after logging in to send a message
+  5. /show/message - page directed to after successfully sending a message.
+  
 ## Discussion
 
 ### General Notes
@@ -47,10 +58,9 @@ running at all times.
 
 ### Twilio
 
-1. Used the Twilio SDK, and set 
-
-Messaging:
-https://www.nielsvandermolen.com/tutorial-symfony-4-messenger/
+1. Used the Twilio SDK. Plan and implemented to use the webhook callback.
+The endpoint I pass to Twilio, I authenticate, ensuring the POST payload
+has the SmsSid that links to that message just for security.
 
 ## Missing/Nice to have
 
@@ -65,10 +75,13 @@ for other services such as RabbitMQ/Redis, this could have been used.
 ## Problems encountered
 
 1. Had problems with Twilio API - couldn't get it to send to a verified number
-on trial account.
+on trial account. Tried many differen't numbers/ways, wouldn't have any of it!
+However, I know the code to send the message works okay, and the endpoint that
+would be hit by the webhook to update the status is okay!
 
-2. Was going to try and use ngrok to supply a Valid WebHook url of the exposed
+2. Was going to try and use ngrok to supply a valid WebHook url of the exposed
 container. However, due to not being able to properly send Twilio Messages, this
 was pointless. I also had problem the fact that ngrok assigns a random 
 subdomain, which is very tricky to get into the config of the PHP container
-to be used as a config variable to generate the callback URL.
+to be used as a config variable to generate the callback URL, without paying to
+use sub domains in ngrok.
