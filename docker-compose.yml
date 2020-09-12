@@ -42,3 +42,15 @@ services:
         ports:
             - "5672:5672"
             - "15672:15672"
+
+    # Ngrok Service
+    #ngrok:
+    #  container_name: container_ngrok
+    #  image: wernight/ngrok:latest
+    #  ports:
+    #    - 4040:4040
+    #  environment:
+    #    NGROK_PROTOCOL: http
+    #    NGROK_PORT: container_nginx:80
+    #  depends_on:
+    #    - nginx
