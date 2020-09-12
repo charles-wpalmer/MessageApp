@@ -8,7 +8,7 @@ show_messages:
     controller: App\Controller\MessageController::show
     methods:    GET
 
-api_post_show:
+api_message_update:
     path:       /api/message/{id}
     controller: App\Controller\MessageController::updateStatus
     methods:    POST
