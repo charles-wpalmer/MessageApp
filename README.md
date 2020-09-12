@@ -22,6 +22,8 @@ containers within the network:
  - container_mysql: mysql database server
  - container_rabbit: RabbitMQ queue server
  - container_rabbit: Ngrok service (commented out)
+ 
+ Place Twilio credentials in .env and run:
 
 ```sh
 ./run
