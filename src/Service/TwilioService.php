@@ -66,7 +66,7 @@ class TwilioService
                 [
                     "body" => $message->getMessage(),
                     "from" => "+447445049414",
-                    "statusCallback" => "http://randomstring.ngrok.io/1234abcd"
+                    "statusCallback" => "http://randomstring.ngrok.io/api/message/" . $message->getId()
                 ]
         );
 
