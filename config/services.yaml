@@ -29,3 +29,8 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    # explicitly configure the service
+    Twilio\Rest\Client:
+        arguments:
+            $username: '%env(TWILIO_ACCOUNT_SID)%'
+            $password: '%env(TWILIO_AUTH_TOKEN)%'
