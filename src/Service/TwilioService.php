@@ -65,11 +65,11 @@ class TwilioService
             $message->getPhoneNumber(),
                 [
                     "body" => $message->getMessage(),
-                    "from" => "+447445049414",
+                    "from" => getenv('TWILIO_NUMBER_FROM'),
                     "statusCallback" => "http://randomstring.ngrok.io/api/message/" . $message->getId()
                 ]
         );
 
-        $this->messageService->updateMessageSid($message, "TESTING 123");
+        $this->messageService->updateMessageSid($message, $smsMessage->sid);
     }
 }
