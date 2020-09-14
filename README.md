@@ -29,6 +29,14 @@ containers within the network:
 ./run
 ```
 
+or:
+
+```sh
+docker-compose build
+docker-compose up -d
+docker exec -it container_php php bin/console doctrine:migrations:migrate -n
+```
+
 Five pages exist:
 
   1. / - main symfony page
